@@ -17,7 +17,7 @@ class Config:
 
     def __init__(self):
         if not self.ENV_NAME:
-            raise ValueError("ENV_NAME variable not defined")
+            self.ENV_NAME = "Development"
 
     def envname(self):
         return self.ENV_NAME

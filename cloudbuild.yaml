@@ -36,16 +36,6 @@ steps:
       ls -lha
 
 
-# This step generates the new manifest for Backend
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: Generate manifest
-  entrypoint: /bin/sh
-  args:
-  - '-c'
-  - |
-     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes-manifests/htmrt-backend.deployment.yaml.template| \
-     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.deployment.yaml
-
 - name: 'gcr.io/cloud-builders/git'
   id: Clone Environment Project
   entrypoint: /bin/sh
@@ -57,6 +47,16 @@ steps:
       ls -lha && \
       set -x && \
       git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+
+# This step generates the new manifest for Backend
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Generate manifest
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes-manifests/htmrt-backend.deployment.yaml.template| \
+     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.deployment.yaml
 
 
 # - name: 'gcr.io/cloud-builders/git'

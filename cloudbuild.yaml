@@ -35,6 +35,14 @@ steps:
     - |
       rm -Rf ./*
 
+- name: 'gcr.io/cloud-builders/git'
+  id: Git Version
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+      git --version
+
 # Clone environment Kubernetes definition
 - name: gcr.io/cloud-builders/git
   id: Clone Environment Project

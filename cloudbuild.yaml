@@ -41,10 +41,11 @@ steps:
   args:
   - '-c'
   - |
+    git --version && \
+    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
     git clone https://github.com/marcusrodmag/htmrt.git && \
     cd htmrt && \
-    ls -lha && \
-    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+    ls -lha
 
 - name: 'gcr.io/cloud-builders/git'
   id: List Worskapce

@@ -41,8 +41,9 @@ steps:
   args:
   - '-c'
   - |
-    git clone -b init https://github.com/marcusrodmag/htmrt.git && \
+    git clone https://github.com/marcusrodmag/htmrt.git && \
     cd htmrt && \
+    ls -lha && \
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
 
 - name: 'gcr.io/cloud-builders/git'

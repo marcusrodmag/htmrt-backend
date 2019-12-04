@@ -39,13 +39,13 @@ steps:
 - name: gcr.io/cloud-builders/git
   id: Clone Environment Project
   args:
-  - '-c'
-  - |
-    git --version && \
-    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
-    # git clone https://github.com/marcusrodmag/htmrt.git && \
-    cd htmrt && \
-    ls -lha
+    - '-c'
+    - |
+      git --version && \
+      git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+      # git clone https://github.com/marcusrodmag/htmrt.git && \
+      cd htmrt && \
+      ls -lha
 
 - name: 'gcr.io/cloud-builders/git'
   id: List Worskapce

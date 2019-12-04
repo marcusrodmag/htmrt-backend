@@ -32,6 +32,14 @@ steps:
   - 'gcr.io/$PROJECT_ID/htmrt-backend:$SHORT_SHA'
 
 - name: 'gcr.io/cloud-builders/git'
+  id: List Worskapce
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+      ls -lha
+
+- name: 'gcr.io/cloud-builders/git'
   id: Copy to production branch
   entrypoint: /bin/sh
   args:

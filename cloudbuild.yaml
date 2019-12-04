@@ -37,7 +37,14 @@ steps:
 
 # Clone environment Kubernetes definition
 - name: gcr.io/cloud-builders/git
-  args: ['clone', 'https://github.com/marcusrodmag/htmrt.git', 'init']
+  id: Clone Environment Project
+  args:
+  - '-c'
+  - |
+    git clone --single-branch --branch init https://github.com/marcusrodmag/htmrt.git && \
+    cd htmrt && \
+    git checkout init && \
+    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
 
 - name: 'gcr.io/cloud-builders/git'
   id: List Worskapce

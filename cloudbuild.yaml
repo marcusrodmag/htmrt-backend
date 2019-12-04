@@ -54,7 +54,7 @@ steps:
       cd htmrt && \
       ls -lha && \
       set -x && \
-      git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+      git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
 
 # - name: 'gcr.io/cloud-builders/git'
 #   id: Copy to production branch

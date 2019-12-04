@@ -52,23 +52,25 @@ steps:
     - |
       git clone -b init https://github.com/marcusrodmag/htmrt.git && \
       cd htmrt && \
-      ls -lha
+      ls -lha && \
+      set -x && \
+      git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
 
-- name: 'gcr.io/cloud-builders/git'
-  id: Copy to production branch
-  entrypoint: /bin/sh
-  args:
-  - '-c'
-  - |
-    set -x && \
-    # Configure Git to create commits with Cloud Build's service account
-    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
-    # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
-    git fetch origin init && git checkout init && \
-    git checkout $COMMIT_SHA kubernetes/backend.yml.template && \
-    # Commit the kubernetes.yaml file with a descriptive commit message
-    git commit -m "Manifest from commit $COMMIT_SHA
-    $(git log --format=%B -n 1 $COMMIT_SHA)" && \
-    # Push the changes back to Cloud Source Repository
-    git push origin init
+# - name: 'gcr.io/cloud-builders/git'
+#   id: Copy to production branch
+#   entrypoint: /bin/sh
+#   args:
+#   - '-c'
+#   - |
+#     set -x && \
+#     # Configure Git to create commits with Cloud Build's service account
+#     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+#     # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
+#     git fetch origin init && git checkout init && \
+#     git checkout $COMMIT_SHA kubernetes/backend.yml.template && \
+#     # Commit the kubernetes.yaml file with a descriptive commit message
+#     git commit -m "Manifest from commit $COMMIT_SHA" && \
+#     $(git log --format=%B -n 1 $COMMIT_SHA)" && \
+#     # Push the changes back to Cloud Source Repository
+#     git push origin init
 # [END cloudbuild]

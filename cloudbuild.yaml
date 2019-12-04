@@ -43,6 +43,15 @@ steps:
     - |
       git --version
 
+
+- name: 'gcr.io/cloud-builders/git'
+  id: Git Clone 0000
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+      git clone https://github.com/marcusrodmag/htmrt.git
+      
 # Clone environment Kubernetes definition
 - name: gcr.io/cloud-builders/git
   id: Clone Environment Project

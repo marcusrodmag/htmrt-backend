@@ -27,6 +27,14 @@ steps:
 #   - 'push'
 #   - 'gcr.io/$PROJECT_ID/htmrt-backend:$SHORT_SHA'
 
+- name: 'gcr.io/cloud-builders/git'
+  id: Clone Environment Project
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+      ls -lha
+
 
 # This step generates the new manifest for Backend
 - name: 'gcr.io/cloud-builders/gcloud'

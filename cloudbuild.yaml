@@ -41,9 +41,8 @@ steps:
   args:
   - '-c'
   - |
-    git clone https://github.com/marcusrodmag/htmrt.git && \
+    git clone --single-branch init https://github.com/marcusrodmag/htmrt.git && \
     cd htmrt && \
-    git checkout init && \
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
 
 - name: 'gcr.io/cloud-builders/git'

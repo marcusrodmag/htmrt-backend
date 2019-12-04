@@ -1,10 +1,6 @@
 # [START cloudbuild]
 steps:
 
-# Clone environment Kubernetes definition
-- name: gcr.io/cloud-builders/git
-  args: ['clone', 'https://github.com/marcusrodmag/htmrt-backend.git', 'master']
-
   # This step runs the unit tests on the app
 - name: 'python:3.7-slim'
   id: Test
@@ -38,6 +34,10 @@ steps:
     - '-c'
     - |
       rm -Rf ./*
+
+# Clone environment Kubernetes definition
+- name: gcr.io/cloud-builders/git
+  args: ['clone', 'https://github.com/marcusrodmag/htmrt.git', 'master']
 
 - name: 'gcr.io/cloud-builders/git'
   id: List Worskapce

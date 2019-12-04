@@ -59,6 +59,14 @@ steps:
      sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes-manifests/htmrt-backend.deployment.yaml.template| \
      sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.deployment.yaml
 
+# This step deploys the new version of our container image
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Deploy to kubernetes
+  args:
+  - 'apply'
+  - '-f'
+  - 'htmrt/kubernetes/htmrt-backend.deployment.yaml'
+
 
 # - name: 'gcr.io/cloud-builders/git'
 #   id: Copy to production branch

@@ -28,7 +28,7 @@ steps:
 #   - 'gcr.io/$PROJECT_ID/htmrt-backend:$SHORT_SHA'
 
 - name: 'gcr.io/cloud-builders/git'
-  id: Clone Environment Project
+  id: List
   entrypoint: /bin/sh
   args:
     - '-c'

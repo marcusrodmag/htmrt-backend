@@ -67,6 +67,9 @@ steps:
   - 'apply'
   - '-f'
   - 'htmrt/kubernetes/htmrt-backend.deployment.yaml'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
 
 
 # - name: 'gcr.io/cloud-builders/git'

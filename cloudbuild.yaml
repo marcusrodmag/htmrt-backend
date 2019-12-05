@@ -96,15 +96,6 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
-# Connect to the repository
-- name: 'gcr.io/cloud-builders/git'
-  args:
-  - clone
-  - git@github.com:marcusrodmag/htmrt
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
-
 - name: 'gcr.io/cloud-builders/git'
   id: Copy to production branch
   entrypoint: /bin/sh
@@ -121,7 +112,6 @@ steps:
     git commit -m "Manifest from commit $COMMIT_SHA" && \
     $(git log --format=%B -n 1 $COMMIT_SHA)" && \
     git push origin init
-
   volumes:
   - name: 'ssh'
     path: /root/.ssh

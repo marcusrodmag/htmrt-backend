@@ -61,6 +61,14 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
   - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
 
+- name: 'gcr.io/cloud-builders/git'
+  id: List
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+      ls -lha key/
+
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Decript MKS SSH key for github
   args:

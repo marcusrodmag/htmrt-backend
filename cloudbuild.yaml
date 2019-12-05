@@ -71,6 +71,19 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
   - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
 
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Decript MKS SSH key for github
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=key/id_rsa.enc
+  - --plaintext-file=/root/.ssh/id_rsa
+  - --location=global
+  - --keyring=rtmrt-keyring
+  - --key=github-rtmrt-key
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 # - name: 'gcr.io/cloud-builders/git'
 #   id: Copy to production branch
@@ -79,6 +92,7 @@ steps:
 #   - '-c'
 #   - |
 #     set -x && \
+#     ssh-keyscan -t rsa github.com > known_hosts && \
 #     # Configure Git to create commits with Cloud Build's service account
 #     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
 #     # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch

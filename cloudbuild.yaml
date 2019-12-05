@@ -28,16 +28,6 @@ steps:
   - 'gcr.io/$PROJECT_ID/htmrt-backend:$SHORT_SHA'
 
 - name: 'gcr.io/cloud-builders/git'
-  id: List
-  entrypoint: /bin/sh
-  args:
-    - '-c'
-    - |
-      echo "Image version: $SHORT_SHA" && \
-      ls -lha 
-
-
-- name: 'gcr.io/cloud-builders/git'
   id: Clone Environment Project
   entrypoint: /bin/sh
   args:
@@ -81,6 +71,18 @@ steps:
   - --location=global
   - --keyring=rtmrt-keyring
   - --key=github-rtmrt-key
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+- name: 'gcr.io/cloud-builders/git'
+  id: List
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+      echo "Image version: $SHORT_SHA" && \
+      ls -lha /root/.ssh
   volumes:
   - name: 'ssh'
     path: /root/.ssh

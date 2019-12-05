@@ -102,6 +102,7 @@ steps:
     ls -lha && \
     git config --global user.name gitautomated && \
     git config --global user.email gitautomated@gmail.com && \
+    git remote add origin git@github.com:marcusrodmag/htmrt.git
     git add . && \
     git commit -m "Manifest from commit $COMMIT_SHA" && \
     git push origin init

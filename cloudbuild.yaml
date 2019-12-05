@@ -33,8 +33,10 @@ steps:
   args:
     - '-c'
     - |
-      git clone -b init https://github.com/marcusrodmag/htmrt.git && \
-      cd htmrt && \
+      git clone https://github.com/marcusrodmag/htmrt.git && \
+      cd htmrt
+      git checkout init  && \
+      git pull  && \
       ls -lha && \
       set -x && \
       git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')

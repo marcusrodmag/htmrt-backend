@@ -3,7 +3,7 @@ steps:
 
   # This step runs the unit tests on the app
 - name: 'python:3.7-slim'
-  id: Test
+  id: Test APP
   entrypoint: /bin/sh
   args:
   - -c
@@ -11,7 +11,7 @@ steps:
 
 # This step builds the container image.
 - name: 'gcr.io/cloud-builders/docker'
-  id: Build
+  id: Docker Build
   args:
   - 'build'
   - '-t'
@@ -22,7 +22,7 @@ steps:
 # The PROJECT_ID and SHORT_SHA variables are automatically
 # replaced by Cloud Build.
 - name: 'gcr.io/cloud-builders/docker'
-  id: Push
+  id: Push Docker Image
   args:
   - 'push'
   - 'gcr.io/$PROJECT_ID/htmrt-backend:$SHORT_SHA'
@@ -43,7 +43,7 @@ steps:
 
 # This step generates the new manifest for Backend
 - name: 'gcr.io/cloud-builders/gcloud'
-  id: Generate manifest
+  id: Generate manifest for k8s
   entrypoint: /bin/sh
   args:
   - '-c'
@@ -63,15 +63,6 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
   - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
 
-- name: 'gcr.io/cloud-builders/git'
-  id: List keys
-  entrypoint: /bin/sh
-  args:
-    - '-c'
-    - |
-      pwd && \
-      ls -lha
-
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Decript MKS SSH key for github
   args:
@@ -87,19 +78,19 @@ steps:
     path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
-  id: List
+  id: List environment project
   entrypoint: /bin/sh
   args:
     - '-c'
     - |
-      echo "Image version: $SHORT_SHA" && \
-      ls -lha /root/.ssh
+      pwd && \
+      ls -lha htmrt/
   volumes:
   - name: 'ssh'
     path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
-  id: Copy to production branch
+  id: Commit do GIT
   entrypoint: /bin/sh
   args:
   - '-c'
@@ -110,7 +101,7 @@ steps:
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
     # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
     cd htmrt && \
-    git add kubernetes/htmrt-backend.deployment.yaml
+    git add .
     git commit -m "Manifest from commit $COMMIT_SHA" && \
     $(git log --format=%B -n 1 $COMMIT_SHA)" && \
     git push origin init

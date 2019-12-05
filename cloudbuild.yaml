@@ -67,7 +67,8 @@ steps:
   args:
     - '-c'
     - |
-      ls -lha key/
+      pwd && \
+      ls -lha key
 
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Decript MKS SSH key for github

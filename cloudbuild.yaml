@@ -97,9 +97,9 @@ steps:
   - |
     echo "Persist k8s Manifest generated" && \
     ssh-keyscan -t rsa github.com > known_hosts && \
-    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
     cd htmrt && \
     ls -lha && \
+    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
     git add . && \
     git commit -m "Manifest from commit $COMMIT_SHA" && \
     git push origin init

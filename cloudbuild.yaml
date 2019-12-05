@@ -62,7 +62,7 @@ steps:
   - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
 
 - name: 'gcr.io/cloud-builders/git'
-  id: List
+  id: List keys
   entrypoint: /bin/sh
   args:
     - '-c'

@@ -75,7 +75,7 @@ steps:
   args:
   - kms
   - decrypt
-  - --ciphertext-file=key/id_rsa.enc
+  - --ciphertext-file=htmrt/key/id_rsa.enc
   - --plaintext-file=/root/.ssh/id_rsa
   - --location=global
   - --keyring=rtmrt-keyring

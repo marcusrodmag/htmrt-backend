@@ -100,16 +100,14 @@ steps:
     ssh-keyscan -t rsa github.com > known_hosts && \
     cd htmrt && \
     ls -lha && \
-    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
-    git config user.name $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+    git config --global user.name gitautomated && \
+    git config --global user.email gitautomated@gmail.com && \
     git add . && \
     git commit -m "Manifest from commit $COMMIT_SHA" && \
     git push origin init
   volumes:
   - name: 'ssh'
     path: /root/.ssh
-
-
 
 # - name: 'gcr.io/cloud-builders/git'
 #   id: Commit do GIT ORIGINAL

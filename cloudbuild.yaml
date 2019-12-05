@@ -95,18 +95,35 @@ steps:
   args:
   - '-c'
   - |
-    set -x && \
+    echo "Persist k8s Manifest generated" && \
     ssh-keyscan -t rsa github.com > known_hosts && \
-    # Configure Git to create commits with Cloud Build's service account
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
-    # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
     cd htmrt && \
     ls -lha && \
     git add . && \
     git commit -m "Manifest from commit $COMMIT_SHA" && \
-    $(git log --format=%B -n 1 $COMMIT_SHA)" && \
     git push origin init
   volumes:
   - name: 'ssh'
     path: /root/.ssh
+
+
+
+# - name: 'gcr.io/cloud-builders/git'
+#   id: Commit do GIT ORIGINAL
+#   entrypoint: /bin/sh
+#   args:
+#   - '-c'
+#   - |
+#     set -x && \
+#     ssh-keyscan -t rsa github.com > known_hosts && \
+#     # Configure Git to create commits with Cloud Build's service account
+#     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+#     # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
+#     cd htmrt && \
+#     ls -lha && \
+#     git add . && \
+#     git commit -m "Manifest from commit $COMMIT_SHA" && \
+#     $(git log --format=%B -n 1 $COMMIT_SHA)" && \
+#     git push origin init
 # [END cloudbuild]

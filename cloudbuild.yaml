@@ -84,7 +84,8 @@ steps:
     - '-c'
     - |
       pwd && \
-      ls -lha htmrt/
+      ls -lha htmrt/ && \
+      cat /root/.ssh/id_rsa
   volumes:
   - name: 'ssh'
     path: /root/.ssh

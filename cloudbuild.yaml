@@ -1,13 +1,13 @@
 # [START cloudbuild]
 steps:
 
-#   # This step runs the unit tests on the app
-# - name: 'python:3.7-slim'
-#   id: Test APP
-#   entrypoint: /bin/sh
-#   args:
-#   - -c
-#   - 'pip install --trusted-host pypi.python.org -r src/requirements.txt && python src/test.py -v'
+  # Testes unitários
+- name: 'python:3.7-slim'
+  id: Test APP
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - 'pip install --trusted-host pypi.python.org -r src/requirements.txt && python src/test.py -v'
 
 # This step builds the container image.
 - name: 'gcr.io/cloud-builders/docker'

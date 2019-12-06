@@ -2,7 +2,8 @@
 import inspect
 import sys
 import os
-from flask import Flask
+import socket
+from flask import Flask, render_template
 from flask_api import status
 from flask_cors import CORS
 
@@ -20,8 +21,10 @@ def app():
 app = app()
 
 @app.route('/', methods = ['GET'])
-def health_check():
-    return '', status.HTTP_200_OK
+def main():
+    hostn = socket.gethostname()
+    print("hosntame: " + hostn)
+    return render_template('main.html', pod_name=hostn, message=env_name())
 
 def env_name():
-    return app.config['APP_NAME']
+    return app.config['FLASK_ENV']

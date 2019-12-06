@@ -71,8 +71,8 @@ steps:
   - --ciphertext-file=htmrt/key/id_rsa.enc
   - --plaintext-file=/root/.ssh/id_rsa
   - --location=global
-  - --keyring=rtmrt-keyring
-  - --key=github003-rtmrt-key
+  - --keyring=0001-keyring
+  - --key=0001-rtmrt-key
   volumes:
   - name: 'ssh'
     path: /root/.ssh

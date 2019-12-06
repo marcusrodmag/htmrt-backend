@@ -39,7 +39,7 @@ steps:
 
 # This step generates the new manifest for Backend
 - name: 'gcr.io/cloud-builders/gcloud'
-  id: Generate manifest for k8s
+  id: Generate k8s manifest
   entrypoint: /bin/sh
   args:
   - '-c'

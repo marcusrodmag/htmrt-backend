@@ -44,7 +44,7 @@ steps:
   - '-c'
   - |
      sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes-manifests/htmrt-backend.yaml.template| \
-     sed "s/POD_ENV_NAME/${_POD_ENV_NAME}/g" kubernetes-manifests/htmrt-backend.yaml.template| \
+     sed "s/POD_ENV_NAME/${_POD_ENV_NAME}/g"| \
      sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.yaml && \
      cat htmrt/kubernetes/htmrt-backend.yaml
 

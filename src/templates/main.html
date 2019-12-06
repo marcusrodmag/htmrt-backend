@@ -2,15 +2,15 @@
 <title>{% block title %}htmrt [{{ env }}]{% endblock %}</title>
 <link rel="stylesheet" href="/main.css">
 <link rel="stylesheet" href="/{{ env }}.css">
-<nav>
-  <h1>htmrt - {{ env }}</h1>
-  <ul>
-      <li>POD NAME: <span>{{ pod_name }}</span>
-  </ul>
-</nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% block content %}{% endblock %}
-</section>
+<body>
+  <div align="center">
+    <nav>
+      <h1>htmrt - {{ env }}</h1>
+      <ul>
+          <li>POD NAME: <span>{{ pod_name }}</span>
+      </ul>
+    </nav>
+  </div>
+</body>
+
+

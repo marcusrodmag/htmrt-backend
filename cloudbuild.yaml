@@ -96,7 +96,6 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
-
 substitutions:
   _ENV: dev
   _POD_ENV_NAME: Development

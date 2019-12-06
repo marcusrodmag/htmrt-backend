@@ -97,7 +97,7 @@ steps:
   - '-c'
   - |
     echo "Persist k8s Manifest generated" && \
-    ssh-keyscan -t rsa github.com > known_hosts && \
+    # ssh-keyscan -t rsa github.com > known_hosts && \
     cd htmrt && \
     ls -lha && \
     git config --global user.name gitautomated && \

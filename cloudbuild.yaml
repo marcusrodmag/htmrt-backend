@@ -44,6 +44,7 @@ steps:
   - '-c'
   - |
      sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes-manifests/htmrt-backend.yaml.template| \
+     sed "s/POD_ENV_NAME/${_POD_ENV_NAME}/g" kubernetes-manifests/htmrt-backend.yaml.template| \
      sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.yaml && \
      cat htmrt/kubernetes/htmrt-backend.yaml
 
@@ -55,8 +56,8 @@ steps:
   - '-f'
   - 'htmrt/kubernetes/htmrt-backend.yaml'
   env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
+  - 'CLOUDSDK_COMPUTE_ZONE=${_COMPUTE_ZONE}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-${_ENV}'
 
 #  Obtem chave ssh privada para autenticação no github
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -94,5 +95,11 @@ steps:
   volumes:
   - name: 'ssh'
     path: /root/.ssh
+
+
+substitutions:
+  _ENV: dev
+  _POD_ENV_NAME: Development
+  _COMPUTE_ZONE: us-west1-c
 
 # [END cloudbuild]

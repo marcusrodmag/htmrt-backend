@@ -1,6 +1,7 @@
 <!doctype html>
 <title>{% block title %}htmrt{% endblock %}</title>
 <link rel="stylesheet" href="/main.css">
+<link rel="stylesheet" href="/{{ env }}.css">
 <nav>
   <h1>htmrt</h1>
   <ul>
@@ -11,6 +12,6 @@
   <header>
     {% block header %}{% endblock %}
   </header>
-    <div class="flash">{{ message }}</div>
+    <div class="flash">{{ env }}</div>
   {% block content %}{% endblock %}
 </section>

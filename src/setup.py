@@ -24,7 +24,7 @@ app = app()
 def main():
     hostn = socket.gethostname()
     print("hosntame: " + hostn)
-    return render_template('main.html', pod_name=hostn, message=env_name())
+    return render_template('main.html', pod_name=hostn, env=env_name())
 
 def env_name():
     return app.config['FLASK_ENV']

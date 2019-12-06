@@ -97,10 +97,10 @@ steps:
   - '-c'
   - |
     echo "Persist k8s Manifest generated" && \
-    # ssh-keyscan -t rsa github.com > known_hosts && \
+    ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts && \
     cd htmrt && \
     ls -lha && \
-    rm -f /root/.ssh/known_hosts && \
+    chmod 400 /root/.ssh/id_rsa && \
     git config --global user.name gitautomated && \
     git config --global user.email gitautomated@gmail.com && \
     git remote set-url origin git@github.com:marcusrodmag/htmrt.git && \

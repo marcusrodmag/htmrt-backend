@@ -72,7 +72,7 @@ steps:
   - --plaintext-file=/root/.ssh/id_rsa
   - --location=global
   - --keyring=rtmrt-keyring
-  - --key=github-rtmrt-key
+  - --key=sgithub003-rtmrt-key
   volumes:
   - name: 'ssh'
     path: /root/.ssh

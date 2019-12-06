@@ -9,7 +9,7 @@ steps:
   - -c
   - 'pip install --trusted-host pypi.python.org -r src/requirements.txt && python src/test.py -v'
 
-# This step builds the container image.
+#  Constroi a imagem Docker
 - name: 'gcr.io/cloud-builders/docker'
   id: Docker Build
   args:
@@ -18,15 +18,14 @@ steps:
   - 'gcr.io/$PROJECT_ID/htmrt-backend:$SHORT_SHA'
   - '.'
 
-# This step pushes the image to Container Registry
-# The PROJECT_ID and SHORT_SHA variables are automatically
-# replaced by Cloud Build.
+# Envia as imagens para registry e substitui variáveis durante execução
 - name: 'gcr.io/cloud-builders/docker'
   id: Push Docker Image
   args:
   - 'push'
   - 'gcr.io/$PROJECT_ID/htmrt-backend:$SHORT_SHA'
 
+  # Clona o repositório de configuração do ambiente (cluster)
 - name: 'gcr.io/cloud-builders/git'
   id: Clone Environment Project
   entrypoint: /bin/sh
@@ -37,7 +36,7 @@ steps:
       cd htmrt
       git checkout $BRANCH_NAME
 
-# This step generates the new manifest for Backend
+# Gera um novo manifesto para definição do cluster usando nova imagem
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Generate k8s manifest
   entrypoint: /bin/sh
@@ -48,7 +47,7 @@ steps:
      sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.yaml && \
      cat htmrt/kubernetes/htmrt-backend.yaml
 
-# This step deploys the new version of our container image
+# Aplica o manifesto gerado
 - name: 'gcr.io/cloud-builders/kubectl'
   id: Deploy to kubernetes
   args:
@@ -59,6 +58,7 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
   - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
 
+#  Obtem chave ssh privada para autenticação no github
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Decript MKS SSH key for github
   args:
@@ -73,6 +73,7 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
+# Commit e PUSH para GIT
 - name: 'gcr.io/cloud-builders/git'
   id: Commit do GIT
   entrypoint: /bin/sh

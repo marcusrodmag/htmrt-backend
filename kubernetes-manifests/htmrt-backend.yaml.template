@@ -16,7 +16,7 @@ kind: Deployment
 metadata:
   name: htmrt-backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: htmrt-backend

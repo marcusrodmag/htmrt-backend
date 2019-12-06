@@ -35,11 +35,7 @@ steps:
     - |
       git clone https://github.com/marcusrodmag/htmrt.git && \
       cd htmrt
-      git checkout init  && \
-      git pull  && \
-      ls -lha && \
-      set -x && \
-      git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+      git checkout init
 
 # This step generates the new manifest for Backend
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -48,9 +44,9 @@ steps:
   args:
   - '-c'
   - |
-     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes-manifests/htmrt-backend.deployment.yaml.template| \
-     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.deployment.yaml && \
-     cat htmrt/kubernetes/htmrt-backend.deployment.yaml
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes-manifests/htmrt-backend.yaml.template| \
+     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > htmrt/kubernetes/htmrt-backend.yaml && \
+     cat htmrt/kubernetes/htmrt-backend.yaml
 
 # This step deploys the new version of our container image
 - name: 'gcr.io/cloud-builders/kubectl'
@@ -58,7 +54,7 @@ steps:
   args:
   - 'apply'
   - '-f'
-  - 'htmrt/kubernetes/htmrt-backend.deployment.yaml'
+  - 'htmrt/kubernetes/htmrt-backend.yaml'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
   - 'CLOUDSDK_CONTAINER_CLUSTER=htmrt-dev'
@@ -78,19 +74,6 @@ steps:
     path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
-  id: List environment project
-  entrypoint: /bin/sh
-  args:
-    - '-c'
-    - |
-      pwd && \
-      ls -lha htmrt/ && \
-      cat /root/.ssh/id_rsa
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
-
-- name: 'gcr.io/cloud-builders/git'
   id: Commit do GIT
   entrypoint: /bin/sh
   args:
@@ -99,7 +82,6 @@ steps:
     echo "Persist k8s Manifest generated" && \
     ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts && \
     cd htmrt && \
-    ls -lha && \
     chmod 400 /root/.ssh/id_rsa && \
     git config --global user.name gitautomated && \
     git config --global user.email gitautomated@gmail.com && \
@@ -112,21 +94,4 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
-# - name: 'gcr.io/cloud-builders/git'
-#   id: Commit do GIT ORIGINAL
-#   entrypoint: /bin/sh
-#   args:
-#   - '-c'
-#   - |
-#     set -x && \
-#     ssh-keyscan -t rsa github.com > known_hosts && \
-#     # Configure Git to create commits with Cloud Build's service account
-#     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
-#     # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
-#     cd htmrt && \
-#     ls -lha && \
-#     git add . && \
-#     git commit -m "Manifest from commit $COMMIT_SHA" && \
-#     $(git log --format=%B -n 1 $COMMIT_SHA)" && \
-#     git push origin init
 # [END cloudbuild]

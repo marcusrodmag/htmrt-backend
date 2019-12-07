@@ -13,11 +13,7 @@ class Config:
     FLASK_DEBUG = os.getenv("FLASK_DEBUG", False)
     CORS_HEADERS = "Content-Type"
     SECRET_KEY = None
-    ENV_NAME = os.getenv("ENV_NAME")
-
-    def __init__(self):
-        if not self.ENV_NAME:
-            self.ENV_NAME = "Development"
+    ENV_NAME = os.getenv("ENV_NAME", "development")
 
     def envname(self):
         return self.ENV_NAME

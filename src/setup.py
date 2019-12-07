@@ -23,8 +23,6 @@ app = app()
 @app.route('/', methods = ['GET'])
 def main():
     hostn = socket.gethostname()
-    print("hosntame: " + hostn)
-    return render_template('main.html', pod_name=hostn, env=env_name())
-
-def env_name():
-    return app.config['FLASK_ENV']
+    print("Enviroment: " + app.config['ENV_NAME'])
+    print("hostname: " + hostn)
+    return render_template('main.html', pod_name=hostn, env=app.config['ENV_NAME'])

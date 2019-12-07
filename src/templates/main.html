@@ -1,16 +1,12 @@
 <!doctype html>
-<title>{% block title %}htmrt{% endblock %}</title>
+<title>{% block title %}htmrt [{{ env }}]{% endblock %}</title>
 <link rel="stylesheet" href="/main.css">
 <link rel="stylesheet" href="/{{ env }}.css">
-<nav>
-  <h1>htmrt - {{ env }}</h1>
-  <ul>
-      <li>POD NAME: <span>{{ pod_name }}</span>
-  </ul>
-</nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% block content %}{% endblock %}
-</section>
+<body>
+  <div class="center">
+    <nav>
+      <h1>htmrt - {{ env }}</h1>
+      <span>POD NAME: <span>{{ pod_name }}</span>
+    </nav>
+  </div>
+</body>

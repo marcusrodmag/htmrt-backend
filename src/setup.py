@@ -24,5 +24,5 @@ app = app()
 def main():
     hostn = socket.gethostname()
     print("Enviroment: " + app.config['ENV_NAME'])
-    print("hosntame: " + hostn)
+    print("hostname: " + hostn)
     return render_template('main.html', pod_name=hostn, env=app.config['ENV_NAME'])

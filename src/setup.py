@@ -27,4 +27,4 @@ def main():
     return render_template('main.html', pod_name=hostn, env=env_name())
 
 def env_name():
-    return app.config['FLASK_ENV']
+    return app.config['ENV_NAME']

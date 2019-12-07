@@ -23,6 +23,7 @@ app = app()
 @app.route('/', methods = ['GET'])
 def main():
     hostn = socket.gethostname()
+    print("Enviroment: " + env_name())
     print("hosntame: " + hostn)
     return render_template('main.html', pod_name=hostn, env=env_name())
 
